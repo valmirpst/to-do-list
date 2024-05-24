@@ -1,0 +1,21 @@
+.header {
+    background-color: var(--gray-700);
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.logo span.to {
+    color: var(--blue);
+}
+
+.logo span.do {
+    color: var(--purple-dark);
+}
+
+.form {
+    position: absolute;
+    bottom: 0;
+}
