@@ -1,20 +1,22 @@
 import React from "react";
 import styles from "./Header.module.css";
+import RocketIcon from "../../assets/img/rocket.svg";
+import { NewTaskForm } from "./NewTaskForm";
 
 const Header = () => {
-    return (
+  return (
     <header className={styles.header}>
-        <div className={styles.logo}>
-            <img src="" alt="logo-icon" />
-            <p className={styles.titleText}><span className={styles.to}>to</span><span className={styles.do}>do</span></p>
-        </div>
+      <div className={styles.logo}>
+        <img src={RocketIcon} alt="Rocket Icon" />
+        <p className={styles.titleText}>
+          <span className={styles.to}>to</span>
+          <span className={styles.do}>do</span>
+        </p>
+      </div>
 
-        <form action="" className={styles.form}>
-            <input className={styles.taskInput} type="text" placeholder="Adicione uma nova tarefa"/>
-            <button type="submit">Criar</button>
-        </form>
+      <NewTaskForm />
     </header>
-    )
-}
+  );
+};
 
 export default Header;

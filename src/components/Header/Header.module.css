@@ -1,21 +1,59 @@
 .header {
-    background-color: var(--gray-700);
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+  background-color: var(--gray-700);
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
 }
 
 .logo span.to {
-    color: var(--blue);
+  color: var(--blue);
+  font: 700 40px/1.2 var(--primary-font);
 }
 
 .logo span.do {
-    color: var(--purple-dark);
+  color: var(--purple-dark);
+  font: 700 40px/1.2 var(--primary-font);
 }
 
-.form {
-    position: absolute;
-    bottom: 0;
+.newTaskForm {
+  width: 100%;
+  padding: 0 8px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  position: absolute;
+  bottom: -27px;
+}
+
+.taskInput {
+  width: 100%;
+  max-width: 638px;
+  background-color: var(--gray-500);
+  color: var(--gray-100);
+  font-size: 16px;
+  padding: 16px;
+  border: inset 1px solid var(--gray-700);
+  border-radius: 8px;
+}
+
+.addNewTaskBtn {
+  color: var(--gray-100);
+  font: 700 14px var(--primary-font);
+  background-color: var(--blue-dark);
+  padding: 16px;
+  border: 0;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
