@@ -2,16 +2,20 @@ import React, { useEffect } from "react";
 import styles from "./Tasks.module.css";
 import clipboardIcon from "../../assets/img/clipboard.svg";
 import trashIcon from "../../assets/img/trash.svg";
+import { TasksContext } from "../Header/NewTaskForm";
 
 const Tasks = () => {
   const emptyInfoDiv = React.useRef();
 
+  const { taskList, setTaskList } = React.useContext(TasksContext);
+
   useEffect(() => {
     emptyInfoDiv.current.classList.add("hidden");
-  });
+  }, [taskList]);
 
   return (
     <main className={styles.tasksContainer}>
+      <h1>{typeof taskList}</h1>
       <header className={styles.tasksHeader}>
         <p className={styles.createdTasksInfo}>
           Tarefas criadas <span className={styles.counter}>{0}</span>

@@ -2,9 +2,10 @@ import React from "react";
 import styles from "./Header.module.css";
 import plusIcon from "../../assets/img/plus.svg";
 
-export const NewTaskForm = () => {
-  const [inputValue, setInputValue] = React.useState("");
+export const TasksContext = React.createContext([]);
 
+export const NewTaskForm = ({ children }) => {
+  const [inputValue, setInputValue] = React.useState("");
   const [taskList, setTaskList] = React.useState([]);
 
   const handleInputChange = e => {
@@ -14,13 +15,12 @@ export const NewTaskForm = () => {
 
   const handleTaskSubmit = e => {
     e.preventDefault();
-
     setTaskList(prev => [...prev, inputValue]);
     setInputValue("");
   };
 
   return (
-    <>
+    <TasksContext.Provider value={{ taskList, setTaskList }}>
       <form
         action=""
         onSubmit={handleTaskSubmit}
@@ -38,6 +38,7 @@ export const NewTaskForm = () => {
           <img src={plusIcon} alt="Add (Plus Icon)" />
         </button>
       </form>
-    </>
+      {children}
+    </TasksContext.Provider>
   );
 };
