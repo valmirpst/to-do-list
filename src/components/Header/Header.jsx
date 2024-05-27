@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./Header.module.css";
 import RocketIcon from "../../assets/img/rocket.svg";
-import { NewTaskForm } from "./NewTaskForm";
 
 const Header = () => {
   return (
@@ -13,8 +12,6 @@ const Header = () => {
           <span className={styles.do}>do</span>
         </p>
       </div>
-
-      <NewTaskForm />
     </header>
   );
 };

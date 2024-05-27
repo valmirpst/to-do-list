@@ -1,27 +1,45 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./Tasks.module.css";
 import clipboardIcon from "../../assets/img/clipboard.svg";
 import trashIcon from "../../assets/img/trash.svg";
-import { TasksContext } from "../Header/NewTaskForm";
+import NewTaskForm from "./NewTaskForm";
 
 const Tasks = () => {
   const emptyInfoDiv = React.useRef();
+  const [taskList, setTaskList] = React.useState([]);
+  const [doneTasksCounter, setDoneTasksCounter] = React.useState(0);
 
-  const { taskList, setTaskList } = React.useContext(TasksContext);
-
-  useEffect(() => {
-    emptyInfoDiv.current.classList.add("hidden");
+  React.useEffect(() => {
+    taskList.length > 0
+      ? emptyInfoDiv.current.classList.add("hidden")
+      : emptyInfoDiv.current.classList.remove("hidden");
   }, [taskList]);
+
+  const handleCheckboxChange = (e, id) => {
+    e.target.checked
+      ? setDoneTasksCounter(prev => prev + 1)
+      : setDoneTasksCounter(prev => prev - 1);
+  };
+
+  const handleTrashClick = (e, value) => {
+    taskList.splice(taskList.indexOf(value), 1);
+    setTaskList(prev => [...prev]);
+  };
 
   return (
     <main className={styles.tasksContainer}>
-      <h1>{typeof taskList}</h1>
+      <NewTaskForm taskList={taskList} setTaskList={setTaskList} />
+
       <header className={styles.tasksHeader}>
         <p className={styles.createdTasksInfo}>
-          Tarefas criadas <span className={styles.counter}>{0}</span>
+          Tarefas criadas
+          <span className={styles.counter}>{taskList.length}</span>
         </p>
-        <p className={styles.finishedTasksInfo}>
-          Concluídas <span className={styles.counter}>{0}</span>
+        <p className={styles.doneTasksInfo}>
+          Concluídas
+          <span className={styles.counter}>
+            {doneTasksCounter} de {taskList.length}
+          </span>
         </p>
       </header>
 
@@ -36,19 +54,33 @@ const Tasks = () => {
           </div>
         </div>
 
-        <div className={styles.task}>
-          <div className={styles.checkboxDiv}>
-            <input id={`check${1}`} type="checkbox" />
-            <label className={styles.check} htmlFor={`check${1}`}></label>
-          </div>
-          <label htmlFor={`check${1}`} className={styles.taskText}>
-            Integer urna interdum massa libero auctor neque turpis turpis
-            semper. Duis vel sed fames integer.
-          </label>
-          <button className={styles.trash}>
-            <img src={trashIcon} alt="" />
-          </button>
-        </div>
+        {taskList.map((value, index) => {
+          return (
+            <div className={styles.task} key={`check_${value}`}>
+              <div className={styles.checkboxDiv}>
+                <input
+                  onChange={handleCheckboxChange}
+                  id={`check_${value}`}
+                  type="checkbox"
+                />
+                <label
+                  className={styles.check}
+                  id={`check_${value}`}
+                  htmlFor={`check_${value}`}
+                ></label>
+              </div>
+              <label htmlFor={`check_${value}`} className={styles.taskText}>
+                {value}
+              </label>
+              <button
+                className={styles.trash}
+                onClick={e => handleTrashClick(e, value)}
+              >
+                <img className={styles.trashImg} src={trashIcon} alt="" />
+              </button>
+            </div>
+          );
+        })}
       </section>
     </main>
   );
