@@ -1,5 +1,6 @@
 .newTaskForm {
   width: 100%;
+  max-width: 100%;
   padding: 0 8px;
   display: flex;
   justify-content: center;
@@ -17,6 +18,10 @@
   padding: 16px;
   border: inset 1px solid var(--gray-700);
   border-radius: 8px;
+}
+
+.taskInput:focus {
+  outline: 1px solid var(--purple-dark);
 }
 
 .addNewTaskBtn {

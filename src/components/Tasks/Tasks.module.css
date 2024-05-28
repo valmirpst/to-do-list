@@ -2,7 +2,7 @@
   width: 100%;
   max-width: calc(736px + 16px);
   margin: auto;
-  padding: calc(64px + 27px) 8px 0 8px;
+  padding-top: calc(64px + 27px);
   position: relative;
 }
 
@@ -48,6 +48,10 @@
   position: relative;
 }
 
+.taskText {
+  width: 100%;
+}
+
 .checkboxDiv {
   width: 24px;
   height: 24px;
@@ -84,6 +88,7 @@
 .checkboxDiv > input:checked + .check::before {
   background: var(--purple-dark) url("../../assets/img/checked.svg") no-repeat
     center center;
+  border: 2px solid var(--purple-dark);
 }
 
 .trash {

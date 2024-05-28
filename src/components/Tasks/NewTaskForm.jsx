@@ -14,9 +14,14 @@ const NewTaskForm = props => {
 
   const handleTaskSubmit = e => {
     e.preventDefault();
+    if (taskList.includes(inputValue)) {
+      window.alert("tarefa ja adicionada");
+      return;
+    }
     if (inputValue.trim()) {
       setTaskList(prev => [...prev, inputValue]);
     } else {
+      window.alert("nao pode ser vazio");
     }
     setInputValue("");
   };

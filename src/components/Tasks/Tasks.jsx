@@ -16,12 +16,26 @@ const Tasks = () => {
   }, [taskList]);
 
   const handleCheckboxChange = (e, id) => {
-    e.target.checked
-      ? setDoneTasksCounter(prev => prev + 1)
-      : setDoneTasksCounter(prev => prev - 1);
+    const element = document.getElementById(id);
+    if (e.target.checked) {
+      setDoneTasksCounter(prev => prev + 1);
+      element.style.textDecoration = "line-through";
+      element.style.color = "var(--gray-300)";
+    } else {
+      setDoneTasksCounter(prev => prev - 1);
+      element.style.textDecoration = "none";
+      element.style.color = "var(--gray-100)";
+    }
   };
 
   const handleTrashClick = (e, value) => {
+    const checkbox = document.querySelector(
+      `input#check_${value.toLowerCase().replace(/[^a-z0-9]/g, "")}`
+    );
+    if (checkbox.checked) {
+      checkbox.checked = false;
+      setDoneTasksCounter(prev => prev - 1);
+    }
     taskList.splice(taskList.indexOf(value), 1);
     setTaskList(prev => [...prev]);
   };
@@ -56,20 +70,36 @@ const Tasks = () => {
 
         {taskList.map((value, index) => {
           return (
-            <div className={styles.task} key={`check_${value}`}>
+            <div
+              className={styles.task}
+              key={`check_${value.toLowerCase().replace(/[^a-z0-9]/g, "")}`}
+            >
               <div className={styles.checkboxDiv}>
                 <input
-                  onChange={handleCheckboxChange}
-                  id={`check_${value}`}
+                  onChange={e =>
+                    handleCheckboxChange(
+                      e,
+                      `label_${value.toLowerCase().replace(/[^a-z0-9]/g, "")}`
+                    )
+                  }
+                  id={`check_${value.toLowerCase().replace(/[^a-z0-9]/g, "")}`}
                   type="checkbox"
                 />
                 <label
                   className={styles.check}
-                  id={`check_${value}`}
-                  htmlFor={`check_${value}`}
+                  id={`check_${value.toLowerCase().replace(/[^a-z0-9]/g, "")}`}
+                  htmlFor={`check_${value
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]/g, "")}`}
                 ></label>
               </div>
-              <label htmlFor={`check_${value}`} className={styles.taskText}>
+              <label
+                htmlFor={`check_${value
+                  .toLowerCase()
+                  .replace(/[^a-z0-9]/g, "")}`}
+                className={styles.taskText}
+                id={`label_${value.toLowerCase().replace(/[^a-z0-9]/g, "")}`}
+              >
                 {value}
               </label>
               <button
