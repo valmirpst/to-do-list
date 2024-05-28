@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./Tasks.module.css";
 import clipboardIcon from "../../assets/img/clipboard.svg";
-import trashIcon from "../../assets/img/trash.svg";
 import NewTaskForm from "./NewTaskForm";
 
 const Tasks = () => {
@@ -105,9 +104,7 @@ const Tasks = () => {
               <button
                 className={styles.trash}
                 onClick={e => handleTrashClick(e, value)}
-              >
-                <img className={styles.trashImg} src={trashIcon} alt="" />
-              </button>
+              ></button>
             </div>
           );
         })}

@@ -50,6 +50,7 @@
 
 .taskText {
   width: 100%;
+  cursor: pointer;
 }
 
 .checkboxDiv {
@@ -73,6 +74,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .checkboxDiv > input + .check::before {
@@ -85,27 +87,45 @@
   display: inline-block;
 }
 
+.checkboxDiv > input + .check:hover::before {
+  background-color: rgba(var(--blue-dark-rgb), 0.2);
+  border: 2px solid var(--blue-dark);
+}
+
 .checkboxDiv > input:checked + .check::before {
   background: var(--purple-dark) url("../../assets/img/checked.svg") no-repeat
     center center;
   border: 2px solid var(--purple-dark);
 }
 
+.checkboxDiv > input:checked + .check:hover::before {
+  background-color: var(--purple);
+  border: 2px solid var(--purple);
+}
+
 .trash {
+  background: url("../../assets/img/trash.svg") no-repeat center center;
   width: 24px;
   height: 24px;
   background-color: transparent;
   border: 0;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
   right: 16px;
+  cursor: pointer;
 }
 
-.trashImg {
-  pointer-events: none;
+.trash:hover {
+  background-color: var(--gray-400);
+  background-image: url("../../assets/img/trash_hover.svg");
 }
+
+/* .trashImg {
+  pointer-events: none;
+} */
 
 .empty {
   font: normal 16px/1.4 var(--primary-font);
