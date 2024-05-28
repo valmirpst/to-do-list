@@ -1,29 +1,38 @@
 import React from "react";
 import styles from "./NewTaskForm.module.css";
 import plusIcon from "../../assets/img/plus.svg";
+import { v4 as uuidv4 } from "uuid";
 
 const NewTaskForm = props => {
-  const [inputValue, setInputValue] = React.useState("");
-
   const { taskList, setTaskList } = props;
+  const [inputValue, setInputValue] = React.useState("");
 
   const handleInputChange = e => {
     const { value } = e.target;
     setInputValue(value);
   };
 
+  React.useEffect(() => {
+    saveTaskList(taskList);
+  }, [taskList]);
+
   const handleTaskSubmit = e => {
     e.preventDefault();
-    if (taskList.includes(inputValue)) {
-      window.alert("tarefa ja adicionada");
-      return;
-    }
     if (inputValue.trim()) {
-      setTaskList(prev => [...prev, inputValue]);
+      const newTask = {
+        id: uuidv4(),
+        value: inputValue,
+        isChecked: false,
+      };
+      setTaskList(prev => [...prev, newTask]);
     } else {
       window.alert("nao pode ser vazio");
     }
     setInputValue("");
+  };
+
+  const saveTaskList = taskList => {
+    localStorage.setItem("taskList", JSON.stringify(taskList));
   };
 
   return (

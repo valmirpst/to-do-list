@@ -5,8 +5,16 @@ import NewTaskForm from "./NewTaskForm";
 
 const Tasks = () => {
   const emptyInfoDiv = React.useRef();
-  const [taskList, setTaskList] = React.useState([]);
-  const [doneTasksCounter, setDoneTasksCounter] = React.useState(0);
+  const [taskList, setTaskList] = React.useState(
+    JSON.parse(localStorage.getItem("taskList"))
+  );
+  const [doneTasksCounter, setDoneTasksCounter] = React.useState(() => {
+    let count = 0;
+    JSON.parse(localStorage.getItem("taskList")).map(value => {
+      if (value.isChecked) count += 1;
+    });
+    return count;
+  });
 
   React.useEffect(() => {
     taskList.length > 0
@@ -14,7 +22,9 @@ const Tasks = () => {
       : emptyInfoDiv.current.classList.remove("hidden");
   }, [taskList]);
 
-  const handleCheckboxChange = (e, id) => {
+  const handleCheckboxChange = (e, id, value) => {
+    value.isChecked = !value.isChecked;
+    localStorage.setItem("taskList", JSON.stringify(taskList));
     const element = document.getElementById(id);
     if (e.target.checked) {
       setDoneTasksCounter(prev => prev + 1);
@@ -28,9 +38,7 @@ const Tasks = () => {
   };
 
   const handleTrashClick = (e, value) => {
-    const checkbox = document.querySelector(
-      `input#check_${value.toLowerCase().replace(/[^a-z0-9]/g, "")}`
-    );
+    const checkbox = document.querySelector(`input#check_${value.id}`);
     if (checkbox.checked) {
       checkbox.checked = false;
       setDoneTasksCounter(prev => prev - 1);
@@ -45,13 +53,15 @@ const Tasks = () => {
 
       <header className={styles.tasksHeader}>
         <p className={styles.createdTasksInfo}>
-          Tarefas criadas
+          {taskList.length > 0 ? "Tarefas criadas" : ""}
           <span className={styles.counter}>{taskList.length}</span>
         </p>
         <p className={styles.doneTasksInfo}>
           Concluídas
           <span className={styles.counter}>
-            {doneTasksCounter} de {taskList.length}
+            {taskList.length > 0
+              ? `${doneTasksCounter} de ${taskList.length}`
+              : doneTasksCounter}
           </span>
         </p>
       </header>
@@ -69,37 +79,28 @@ const Tasks = () => {
 
         {taskList.map((value, index) => {
           return (
-            <div
-              className={styles.task}
-              key={`check_${value.toLowerCase().replace(/[^a-z0-9]/g, "")}`}
-            >
+            <div className={styles.task} key={`check_${value.id}`}>
               <div className={styles.checkboxDiv}>
                 <input
                   onChange={e =>
-                    handleCheckboxChange(
-                      e,
-                      `label_${value.toLowerCase().replace(/[^a-z0-9]/g, "")}`
-                    )
+                    handleCheckboxChange(e, `label_${value.id}`, value)
                   }
-                  id={`check_${value.toLowerCase().replace(/[^a-z0-9]/g, "")}`}
+                  id={`check_${value.id}`}
                   type="checkbox"
+                  checked={value.isChecked}
                 />
                 <label
                   className={styles.check}
-                  id={`check_${value.toLowerCase().replace(/[^a-z0-9]/g, "")}`}
-                  htmlFor={`check_${value
-                    .toLowerCase()
-                    .replace(/[^a-z0-9]/g, "")}`}
+                  id={`check_${value.id}`}
+                  htmlFor={`check_${value.id}`}
                 ></label>
               </div>
               <label
-                htmlFor={`check_${value
-                  .toLowerCase()
-                  .replace(/[^a-z0-9]/g, "")}`}
+                htmlFor={`check_${value.id}`}
                 className={styles.taskText}
-                id={`label_${value.toLowerCase().replace(/[^a-z0-9]/g, "")}`}
+                id={`label_${value.id}`}
               >
-                {value}
+                {value.value}
               </label>
               <button
                 className={styles.trash}

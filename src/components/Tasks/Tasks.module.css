@@ -2,7 +2,7 @@
   width: 100%;
   max-width: calc(736px + 16px);
   margin: auto;
-  padding-top: calc(64px + 27px);
+  padding: calc(64px + 27px) 8px 0 8px;
   position: relative;
 }
 
@@ -10,6 +10,7 @@
   display: flex;
   justify-content: space-between;
   font: 700 14px/1.2 var(--primary-font);
+  margin-bottom: 24px;
 }
 
 .createdTasksInfo {
@@ -29,6 +30,7 @@
 }
 
 .counter {
+  color: var(--gray-200);
   background-color: var(--gray-400);
   font: 700 12px/1.2 var(--primary-font);
   padding: 2px 8px;
@@ -42,8 +44,10 @@
 }
 
 .task {
+  background-color: var(--gray-500);
   color: var(--gray-100);
   padding: 16px 52px;
+  border-radius: 8px;
   display: flex;
   position: relative;
 }
