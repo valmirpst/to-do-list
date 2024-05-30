@@ -2,8 +2,9 @@ import React from "react";
 import styles from "./Tasks.module.css";
 import clipboardIcon from "../../assets/img/clipboard.svg";
 import NewTaskForm from "./NewTaskForm";
+import Task from "./Task";
 
-const Tasks = () => {
+const Tasks = ({ error, setError }) => {
   const emptyInfoDiv = React.useRef();
   const [taskList, setTaskList] = React.useState(
     JSON.parse(localStorage.getItem("taskList"))
@@ -49,7 +50,12 @@ const Tasks = () => {
 
   return (
     <main className={styles.tasksContainer}>
-      <NewTaskForm taskList={taskList} setTaskList={setTaskList} />
+      <NewTaskForm
+        taskList={taskList}
+        setTaskList={setTaskList}
+        error={error}
+        setError={setError}
+      />
 
       <header className={styles.tasksHeader}>
         <p className={styles.createdTasksInfo}>
@@ -77,36 +83,14 @@ const Tasks = () => {
           </div>
         </div>
 
-        {taskList.map((value, index) => {
+        {taskList.map(value => {
           return (
-            <div className={styles.task} key={`check_${value.id}`}>
-              <div className={styles.checkboxDiv}>
-                <input
-                  onChange={e =>
-                    handleCheckboxChange(e, `label_${value.id}`, value)
-                  }
-                  id={`check_${value.id}`}
-                  type="checkbox"
-                  checked={value.isChecked}
-                />
-                <label
-                  className={styles.check}
-                  id={`check_${value.id}`}
-                  htmlFor={`check_${value.id}`}
-                ></label>
-              </div>
-              <label
-                htmlFor={`check_${value.id}`}
-                className={styles.taskText}
-                id={`label_${value.id}`}
-              >
-                {value.value}
-              </label>
-              <button
-                className={styles.trash}
-                onClick={e => handleTrashClick(e, value)}
-              ></button>
-            </div>
+            <Task
+              key={`check_${value.id}`}
+              value={value}
+              handleTrashClick={handleTrashClick}
+              handleCheckboxChange={handleCheckboxChange}
+            />
           );
         })}
       </section>

@@ -3,13 +3,14 @@ import styles from "./NewTaskForm.module.css";
 import plusIcon from "../../assets/img/plus.svg";
 import { v4 as uuidv4 } from "uuid";
 
-const NewTaskForm = props => {
-  const { taskList, setTaskList } = props;
+const NewTaskForm = ({ taskList, setTaskList, error, setError }) => {
   const [inputValue, setInputValue] = React.useState("");
+  const taskInput = React.useRef();
 
   const handleInputChange = e => {
     const { value } = e.target;
     setInputValue(value);
+    setError("");
   };
 
   React.useEffect(() => {
@@ -18,15 +19,22 @@ const NewTaskForm = props => {
 
   const handleTaskSubmit = e => {
     e.preventDefault();
+    const date = new Date();
+
     if (inputValue.trim()) {
       const newTask = {
         id: uuidv4(),
         value: inputValue,
         isChecked: false,
+        createDate: {
+          day: date.getDate(),
+          month: date.getMonth() + 1,
+          year: date.getFullYear(),
+        },
       };
       setTaskList(prev => [...prev, newTask]);
     } else {
-      window.alert("nao pode ser vazio");
+      error ? setError("") : setError("A tarefa não pode estar vazia");
     }
     setInputValue("");
   };
@@ -43,6 +51,8 @@ const NewTaskForm = props => {
         placeholder="Adicione uma nova tarefa"
         value={inputValue}
         onChange={handleInputChange}
+        onClick={() => setError("")}
+        ref={taskInput}
       />
       <button className={styles.addNewTaskBtn} type="submit">
         Criar
