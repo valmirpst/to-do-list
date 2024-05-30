@@ -5,6 +5,10 @@
   border-radius: 8px;
   display: flex;
   position: relative;
+  opacity: 0;
+  transition-property: filter;
+  transition-duration: 0.5s;
+  animation: addingTask 0.3s forwards ease-in-out;
 }
 
 .taskText {
@@ -75,7 +79,7 @@
   align-items: center;
   justify-content: center;
   position: absolute;
-  right: 16px;
+  right: calc(16px + 32px);
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
@@ -84,6 +88,25 @@
 .trash:hover {
   background-color: var(--gray-400);
   background-image: url("../../assets/img/trash_hover.svg");
+}
+
+.orderButtons {
+  display: grid;
+  gap: 8px;
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.upButton,
+.downButton {
+  color: var(--gray-300);
+}
+
+.upButton:hover,
+.downButton:hover {
+  color: var(--gray-100);
 }
 
 .dateDisplay {
@@ -123,4 +146,15 @@
   top: 1.5px;
   transform: rotate(-45deg);
   z-index: -1;
+}
+
+@keyframes addingTask {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

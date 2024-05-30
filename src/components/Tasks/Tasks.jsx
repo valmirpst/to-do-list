@@ -90,6 +90,8 @@ const Tasks = ({ error, setError }) => {
               value={value}
               handleTrashClick={handleTrashClick}
               handleCheckboxChange={handleCheckboxChange}
+              taskList={taskList}
+              setTaskList={setTaskList}
             />
           );
         })}
